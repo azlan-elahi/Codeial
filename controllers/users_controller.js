@@ -3,27 +3,38 @@ const cookieParser = require('cookie-parser');
 // const { user } = require('../config/mongoose');
 
 module.exports.profile = function (req, res) {
-    // return res.end('<h1>User Profile</h1>);
-    res.cookie('user', "Azlan");
-    console.log(req.cookie);
-    return res.render('profile', {
-        title: "profile"
-    });
-};
+    if (req.cookies.user_id) {
+        User.findById(req.cookies.user_id, function (err, user) {
+            if (err) {
+                console.log("Error while getting to profile action");
+            }
+            if (user) {
+                return res.render('user_profile', {
+                    title: "profile",
+                    user: user
+                });
+            }
+        })
+    }
+    else {
+        return res.redirect('/users/sign-in');
+    }
+}
+
+
+//Sign Out
+module.exports.signOut = function (req, res) {
+    res.clearCookie("user_id");
+    return res.redirect('/users/sign-in');
+}
+
 
 //Sign Up
 module.exports.signUp = function (req, res) {
     return res.render('user_sign_up', {
-        title: "Codial | Sign Up"
+        title: "Codeial | Sign Up"
     });
-}
-
-//Sign In
-// module.exports.signIn = function (req, res) {
-//     return res.render('user_sign_in', {
-//         title= "Codial | Sign In"
-//     });
-// };
+};
 
 //Create User
 module.exports.create = function (req, res) {
@@ -59,3 +70,24 @@ module.exports.signIn = function (req, res) {
         title: "Codeial | Sign In"
     });
 };
+
+//create session action
+module.exports.createSession = function (req, res) {
+    console.log("Session action");
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (err) {
+            console.log("Error in finding user for sign in");
+        }
+        if (user) {
+            if (user.password != req.body.password) {
+                return res.redirect('back');
+            }
+            res.cookie('user_id', user.id);
+            console.log("ID mil gyi!!!")
+            return res.redirect('/users/profile');
+        }
+        else {
+            return res.redirect('back');
+        };
+    });
+}
