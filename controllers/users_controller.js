@@ -4,8 +4,8 @@ const cookieParser = require('cookie-parser');
 
 module.exports.profile = function (req, res) {
     // return res.end('<h1>User Profile</h1>);
-    res.cookie('user', "Azlan");
-    console.log(req.cookie);
+    // res.cookie('user', "Azlan");
+    // console.log(req.cookie);
     return res.render('profile', {
         title: "profile"
     });
@@ -13,6 +13,9 @@ module.exports.profile = function (req, res) {
 
 //Sign Up
 module.exports.signUp = function (req, res) {
+    if (req.isAuthenticated) {
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up', {
         title: "Codial | Sign Up"
     });
@@ -55,7 +58,27 @@ module.exports.create = function (req, res) {
 
 //Sign In
 module.exports.signIn = function (req, res) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_in', {
         title: "Codeial | Sign In"
     });
 };
+
+//Sign Out
+// module.exports.signOut = function (req, res) {
+//     return res.redirect('/users/sign-in');
+// }
+
+//sign out
+module.exports.destroySession = function (req, res) {
+    req.logout(); //passport give this function
+    return res.redirect('/');
+}
+
+//Create session
+module.exports.createSession = function (req, res) {
+    console.log("aagye create-session");
+    return res.redirect('/users/profile'); //when Passport.js uses localStrategy for auth, session is created in passport.js itself
+}

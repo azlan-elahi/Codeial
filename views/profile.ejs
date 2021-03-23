@@ -1,13 +1,14 @@
-<html>
-
-<head>
-    <title>
-        <%= title %>
-    </title>
-</head>
-
-<body>
-    <h1> User Profile! </h1>
-</body>
-
-</html>
+<link rel="stylesheet" href="/css/user_profile.css">
+<div class="user-profile-div">
+    <form action="/users/sign-out" method="GET">
+        <h1>CodEial Profile Page!!</h1>
+        <h3>
+            <%= user.name %>
+        </h3>
+        <h3>
+            <%= user.email %>
+        </h3>
+        <input type="submit" value="Sign Out" />
+        <!-- <button type="submit" href="/create-session">Sign In</button> -->
+    </form>
+</div>

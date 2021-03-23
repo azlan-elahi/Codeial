@@ -1,0 +1,5 @@
+#header-div {
+  background-color: bisque;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
