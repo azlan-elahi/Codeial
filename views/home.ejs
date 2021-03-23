@@ -7,15 +7,32 @@
 </head>
 
 <body>
-    <h1> This is Codeial <%= title %>
+    <h1>Codeial / <%= title %>
     </h1>
     <section id="feed-posts">
         <h4>Posts</h4>
-        <form action="" id="new-post-form" method="POST">
+        <form action="/posts/create" id="new-post-form" method="POST">
             <textarea name="content" id="new-post-comment" cols="30" rows="3"></textarea>
-            <input type="submit" value="Post">
+            <input type="submit" value="Post" placeholder="Type Here">
         </form>
     </section>
+    <div id="posts-list-container">
+        <ul>
+            <% for(post of posts){ %>
+                <li>
+                    <p>
+                        <%= post.content %>
+                            <br />
+                            <small>
+                                <%= post.user.name%>
+                                    <br />
+                                    <%= post.user.email%>
+                            </small>
+                    </p>
+                </li>
+                <% } %>
+        </ul>
+    </div>
 </body>
 
 </html>

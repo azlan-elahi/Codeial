@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 const cookieParser = require('cookie-parser');
 // const { user } = require('../config/mongoose');
 
@@ -82,3 +83,4 @@ module.exports.createSession = function (req, res) {
     console.log("aagye create-session");
     return res.redirect('/users/profile'); //when Passport.js uses localStrategy for auth, session is created in passport.js itself
 }
+
