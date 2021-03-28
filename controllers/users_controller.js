@@ -7,10 +7,24 @@ module.exports.profile = function (req, res) {
     // return res.end('<h1>User Profile</h1>);
     // res.cookie('user', "Azlan");
     // console.log(req.cookie);
-    return res.render('profile', {
-        title: "profile"
-    });
+    User.findById(req.params.id, function (err, user) {
+        return res.render('profile', {
+            title: "profile",
+            profile_user: user
+        });
+    })
 };
+
+module.exports.update = function (req, res) {
+
+    if (req.user.id == req.params.id) { //It check with localuser or user who sent req with params id
+        User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+            return res.redirect('/');
+        })
+    } else {
+        return res.status(401).sent('Unauthorized');
+    }
+}
 
 //Sign Up
 module.exports.signUp = function (req, res) {

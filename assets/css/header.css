@@ -1,5 +1,6 @@
 #header-div {
-  background-color: bisque;
+  background-color: lightcoral;
   display: flex;
   justify-content: space-between;
-  align-items: center; }
+  align-items: center;
+  margin: 0%; }
