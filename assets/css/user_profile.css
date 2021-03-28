@@ -1,5 +1,7 @@
 body {
   margin: 0%; }
+  body i:hover {
+    background-color: yellow; }
 
 #user-profile-div {
   background-color: aquamarine;
