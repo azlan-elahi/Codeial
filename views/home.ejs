@@ -6,9 +6,11 @@
 <div id="home-container">
 
     <% if(locals.user){ %>
+
         <%- include('_post') -%>
             <% }else{ %>
                 <h1>Please Sign In!!</h1>
                 <% } %>
 
 </div>
+<script src="/js/home_posts.js"></script>
