@@ -1,14 +1,14 @@
-<li>
+<li id="post-<%= post._id %>-<%= comment._id %>"">
     <p>
         <% if ( locals.user && locals.user.id==comment.user.id ){ %>
             <small>
-                <a href="/comments/destroy/<%= comment.id %>"><i class="fas fa-trash-alt"></i></a>
+                <a href=" /comments/destroy/<%=comment.id %>"><i class="fas fa-trash-alt"></i></a>
+    </small>
+    <% } %>
+        <%= comment.content %>
+            <br />
+            <small>
+                Comment posted by: <%= comment.user.name %>
             </small>
-            <% } %>
-                <%= comment.content %>
-                    <br />
-                    <small>
-                        Comment posted by: <%= comment.user.name %>
-                    </small>
-    </p>
+            </p>
 </li>

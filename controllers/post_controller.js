@@ -42,7 +42,9 @@ module.exports.create = async function (req, res) {
                     data: {
                         post: post
                     },
-                    message: "Post created!"
+                    message: "Post created!",
+                    flashStatus: "success",
+                    flashMessage: "Post published!"
                 })
             }
             console.log("Nrmal request");
@@ -87,7 +89,7 @@ module.exports.destroy = async function (req, res) {
                         post_id: req.params.id
                     },
                     message: 'Post deleted'
-                })
+                });
             }
             req.flash('success', 'Post and associated comments deleted');
             return res.redirect('back');

@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const Post = require('../models/post');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
+const path = require('path');
 // const { user } = require('../config/mongoose');
 
 module.exports.profile = async function (req, res) {
@@ -9,6 +11,7 @@ module.exports.profile = async function (req, res) {
     // console.log(req.cookie);
     try {
         let user = await User.findById(req.params.id);
+        // console.log(user.avatar);
         return res.render('profile', {
             title: "profile",
             profile_user: user
@@ -34,14 +37,43 @@ module.exports.profileFriends = async function (req, res) {
     }
 };
 
-module.exports.update = function (req, res) {
+module.exports.update = async function (req, res) {
 
-    if (req.user.id == req.params.id) { //It check with localuser or user who sent req with params id
-        User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
-            req.flash('success', 'Successfully Update!');
-            return res.redirect('/');
-        })
-    } else {
+    // if (req.user.id == req.params.id) { //It check with localuser or user who sent req with params id
+    //     User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+    //         req.flash('success', 'Successfully Update!');
+    //         return res.redirect('/');
+    //     })
+    // } else {
+    //     req.flash('error', 'Can not update name!');
+    //     return res.status(401).sent('Unauthorized');
+    // }
+    if (req.user.id == req.params.id) {
+        try {
+            let user = await User.findByIdAndUpdate(req.params.id);
+            User.uploadedAvatar(req, res, function (err) {
+                if (err) {
+                    console.log('********Multer Error', err);
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if (req.file) {
+                    if (user.avatar) { fs.unlinkSync(path.join(__dirname, '..', user.avatar)); }
+                    //this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                req.flash('success', 'Successfully Update!');
+                return res.redirect('back');
+            });
+
+        } catch (error) {
+            req.flash('error', err);
+            return res.redirect('back')
+        }
+    }
+    else {
         req.flash('error', 'Can not update name!');
         return res.status(401).sent('Unauthorized');
     }

@@ -27,12 +27,18 @@ app.use(sassMIddleware({
     prefix: '/css'
 }))
 
+
+
 //for cookie
 app.use(express.urlencoded());
 app.use(cookieParser());
 
 //for static files
 app.use(express.static('./assets'));
+
+
+//Make the uploads path available for the browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
 //for layout of UI
 app.use(expressLayouts); //Always placed before routes middleware
 

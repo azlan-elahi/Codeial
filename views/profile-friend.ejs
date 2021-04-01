@@ -4,21 +4,29 @@
     </form>
     <h1>CodEial Profile Page!!</h1>
 
+    <img src="<%= profile_user.avatar %>" alt="<%= profile_user.name %>" width="100">
+    <br />
     <% if(user.id==profile_user.id){ %>
+        <h4>
+            User Name: <%= profile_user.name %>
+        </h4>
+        <h4>
+            User Email: <%= profile_user.email %>
+        </h4>
         <!-- If user matched show the form -->
-        <form action="/users/update/<%= profile_user.id %>" method="POST">
-            <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
-            <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+        <form action="/users/update/<%= user.id %>" enctype="multipart/form-data" method="POST">
+            <input type="text" name="name" placeholder="Your Name" value="<%= user.name %>" required>
+            <input type="email" name="email" placeholder="Your Email" value="<%= user.email %>" required>
+            <input type="file" name="avatar" placeholder="Profile Picture">
             <input type="submit" value="Update">
-        </form>
-        <% }else{ %>
-            <!-- only show the profile info -->
-            <h4>
-                User Name: <%= profile_user.name %>
-            </h4>
-            <h4>
-                User Email: <%= profile_user.email %>
-            </h4>
-            <% } %>
-                <!-- <button type="submit" href="/create-session">Sign In</button> -->
+            <% }else{ %>
+                <!-- only show the profile info -->
+                <h4>
+                    User Name: <%= profile_user.name %>
+                </h4>
+                <h4>
+                    User Email: <%= profile_user.email %>
+                </h4>
+                <% } %>
+                    <!-- <button type="submit" href="/create-session">Sign In</button> -->
 </div>
