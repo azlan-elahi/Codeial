@@ -9,6 +9,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
 const router = express.Router();
 //they need argument and we passed session as argument
 // const MongoStore = require('connect-mongo')(session); //old version of syntax
